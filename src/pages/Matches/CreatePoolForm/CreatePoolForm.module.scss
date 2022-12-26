@@ -1,0 +1,168 @@
+.addToPoolDiv {
+  display: flex;
+  margin: 15px 0px;
+  justify-content: space-between;
+
+  .toggle {
+    width: 40px;
+    height: 20px;
+    cursor: pointer;
+    border-radius: 10px;
+    .toggleInput {
+      display: none;
+    }
+    .toggleFill {
+      position: relative;
+      width: 40px;
+      height: 20px;
+      border-radius: 10px;
+      background: #ddd;
+      transition: background 0.2s;
+    }
+    .toggleInput:checked ~ .toggleFill {
+      background: #00ffc2;
+    }
+    .toggleFill::after {
+      top: 0;
+      left: 0;
+      content: '';
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      background: #fff;
+      border-radius: 10px;
+      transition: transform 0.2s;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    }
+    .toggleInput:checked ~ .toggleFill::after {
+      transform: translateX(20px);
+    }
+  }
+}
+
+.poolIdDropdown {
+  position: relative;
+  .sportSelect {
+    margin-top: 10px;
+    width: 100%;
+    padding: 15px 25px;
+    background-color: #050505;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 11px;
+    line-height: 11px;
+    color: #ffffff;
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+    cursor: pointer;
+    border: 1px solid #00ffc2;
+  }
+  &::after {
+    content: '▼';
+    position: absolute;
+    font-size: 1rem;
+    right: 20px;
+    top: 45px;
+    pointer-events: none;
+  }
+}
+
+.selectWrapper {
+  position: relative;
+  border: 1px solid #1b1b1b;
+  border-radius: 2px;
+  margin-bottom: 10px;
+
+  &::after {
+    content: '▼';
+    position: absolute;
+    font-size: 1rem;
+    right: 20px;
+    top: 10px;
+    pointer-events: none;
+  }
+
+  .leagueSelect {
+    width: 100%;
+    padding: 15px 25px;
+    background-color: #050505;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 11px;
+    line-height: 11px;
+    color: #ffffff;
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+    cursor: pointer;
+  }
+}
+
+.orderedList {
+  width: 100%;
+  display: flex;
+  background-color: #414141;
+  margin: 8px auto;
+  border: 1px solid #1b1b1b;
+  border-radius: 2px;
+}
+
+.selectedMatches ol {
+  list-style: none;
+  display: flex;
+  align-items: center;
+
+  li {
+    display: inline-block;
+    margin: 8px auto;
+
+    p {
+      text-align: right;
+      font-size: 13px;
+      line-height: 15px;
+      margin: 5px 0;
+    }
+
+    p.walletAddress {
+      font-size: 10px;
+      line-height: 12px;
+      color: rgba(255, 255, 255, 1);
+    }
+  }
+}
+
+.textInput {
+  width: 100%;
+  padding: 15px 25px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 11px;
+  line-height: 11px;
+  color: #ffffff;
+  background-color: #414141;
+  margin: 4px auto;
+  border: 1px solid #1b1b1b;
+  border-radius: 2px;
+
+  &::placeholder {
+    color: #fff;
+  }
+}
+
+.submitBtn {
+  padding: 10px 40px;
+  margin: 15px auto;
+  display: block;
+  width: 100%;
+  background-color: #00ffc2;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 13px;
+  text-align: center;
+}

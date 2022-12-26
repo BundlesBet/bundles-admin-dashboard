@@ -1,0 +1,62 @@
+{
+  "name": "react-web3-template",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "@typechain/web3-v1": "^3.1.0",
+    "@types/jest": "^26.0.15",
+    "@types/node": "^12.0.0",
+    "@types/react": "^17.0.0",
+    "@types/react-datetime-picker": "^3.4.1",
+    "@types/react-dom": "^17.0.0",
+    "@types/react-modal": "^3.13.1",
+    "axios": "^0.24.0",
+    "classnames": "^2.3.1",
+    "graphql": "^16.2.0",
+    "moment": "^2.29.3",
+    "moralis": "^1.7.0",
+    "sass": "1.54.8",
+    "react": "^17.0.2",
+    "react-datetime-picker": "^3.5.0",
+    "react-dom": "^17.0.2",
+    "react-icons": "^4.3.1",
+    "react-modal": "^3.14.3",
+    "react-moralis": "^1.3.5",
+    "react-router-dom": "^6.2.1",
+    "react-scripts": "4.0.3",
+    "react-toastify": "^8.0.1",
+    "typechain": "^5.1.2",
+    "typescript": "^4.1.2",
+    "urql": "^2.0.6",
+    "web-vitals": "^1.0.1",
+    "web3": "^1.5.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "generate": "npx typechain --target=web3-v1 './src/abis/*.json' --out-dir './src/types'"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

@@ -1,0 +1,157 @@
+.requestContainer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+
+  button {
+    cursor: pointer;
+  }
+
+  .viewBtn {
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 26px;
+    color: #00ffc2;
+    background-color: transparent;
+    border: none;
+  }
+
+  .divider {
+    display: flex;
+    align-items: flex-end;
+    flex: 1;
+
+    hr {
+      width: 100%;
+      border: solid 1px #1c1c1c;
+    }
+  }
+
+  .addBtn {
+    background: linear-gradient(0deg, #00ffc2, #00ffc2),
+      linear-gradient(79.01deg, #252525 21.98%, #121212 45.32%, #0b0b0b 80.19%);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 2px;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 100.1%;
+    text-align: center;
+    padding: 10px 30px;
+    color: #000000;
+    border: none;
+  }
+}
+
+.center {
+  font-family: Poppins;
+  color: rgba(0, 255, 194, 0.5);
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.resultContainer {
+  border-radius: 5px;
+  padding: 60px 50px;
+  border: solid 1px #00ffc2;
+  margin: 40px auto;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+    thead {
+      background-color: #161616;
+
+      th {
+        padding: 10px 0;
+        text-align: center;
+        font-family: Poppins;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 13px;
+        color: #a9a9a9;
+      }
+    }
+
+    tbody {
+      td {
+        padding: 10px 5px;
+        text-align: center;
+      }
+    }
+
+    tr {
+      border-bottom: 1px solid #1c1c1c;
+    }
+  }
+
+  .sportsName,
+  .leagueName {
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 13px;
+    color: #ffffff;
+  }
+
+  .seasons {
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 14px;
+    color: #00ffc2;
+  }
+
+  .subHeaders {
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 9px;
+    line-height: 10px;
+  }
+
+  .muted {
+    color: #494949;
+  }
+
+  .actionBtn {
+    background: linear-gradient(79.01deg, #252525 21.98%, #121212 45.32%, #0b0b0b 80.19%);
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 2px;
+    margin: 0 3px;
+    padding: 5px;
+    border: none;
+  }
+
+  .activeStatus,
+  .pendingStatus,
+  .declinedStatus {
+    text-transform: capitalize;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 12px;
+  }
+
+  .activeStatus {
+    color: #00ffc2;
+  }
+
+  .pendingStatus {
+    color: #ff8500;
+  }
+
+  .declinedStatus {
+    color: #ff1744;
+  }
+}
