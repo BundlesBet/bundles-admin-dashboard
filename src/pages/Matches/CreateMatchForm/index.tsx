@@ -21,85 +21,88 @@ interface FORM_STATES {
 
 interface FORM_PROPS {
   closeFormModal: () => void;
-  setNewMatch: any;
+  // setNewMatch: any;
 }
 
 const CreateMatchForm = (props: FORM_PROPS) => {
-  const { leagues, isLoading } = useAppData();
+  // const { leagues, isLoading } = useAppData();
 
-  const isTransactionInProgress = useSwitch();
-  const isTxSuccessfulModalOpen = useSwitch();
+  // const isTransactionInProgress = useSwitch();
+  // const isTxSuccessfulModalOpen = useSwitch();
 
-  const { closeFormModal, setNewMatch } = props;
+  // const { closeFormModal, setNewMatch } = props;
 
-  const { account, refresh } = useMetamask();
+  // const { account, refresh } = useMetamask();
 
-  const [formStates, setFormStates] = useState<FORM_STATES>({
-    selectedLeague: '',
-    espnMatchId: '',
-    season: '',
-  });
+  // const [formStates, setFormStates] = useState<FORM_STATES>({
+  //   selectedLeague: '',
+  //   espnMatchId: '',
+  //   season: '',
+  // });
 
-  const onInputChange = (e: any) => {
-    setFormStates({ ...formStates, [e.target.name]: e.target.value });
-  };
+  // const onInputChange = (e: any) => {
+  //   setFormStates({ ...formStates, [e.target.name]: e.target.value });
+  // };
 
-  const isTxSuccess = useSwitch();
+  // const isTxSuccess = useSwitch();
 
-  const onFormSubmit = async (e: any) => {
-    e.preventDefault();
-    console.log(formStates);
-    if (!account) return;
-    try {
-      const { Prediction } = Contracts.instances;
-      isTransactionInProgress.true();
-      isTxSuccessfulModalOpen.true();
-      await Prediction.methods
-        .addMatch([parseInt(formStates.selectedLeague, 10), parseInt(formStates.espnMatchId, 10)])
-        .send({ from: account })
-        .on('receipt', (receipt) => {
-          isTransactionInProgress.false();
-          receipt.status ? isTxSuccess.true() : isTxSuccess.false();
-          setTimeout(
-            setNewMatch({
-              league: leagues[Number(formStates.selectedLeague)].name,
-              espnMatchId: formStates.espnMatchId,
-            }),
-            3000,
-          );
-          setTimeout(closeFormModal, 4000);
-        })
-        .on('error', () => {
-          isTransactionInProgress.false();
-          isTxSuccess.false();
-          setTimeout(closeFormModal, 2000);
-        });
-      setTimeout(() => {
-        closeFormModal();
-      }, 30000);
-    } catch (error) {
-      console.log(error);
-      isTransactionInProgress.false();
-      closeFormModal();
-    }
-  };
+  // const onFormSubmit = async (e: any) => {
+  //   e.preventDefault();
+  //   console.log(formStates);
+  //   if (!account) return;
+  //   try {
+  //     const { Prediction } = Contracts.instances;
+  //     isTransactionInProgress.true();
+  //     isTxSuccessfulModalOpen.true();
+  //     await Prediction.methods
+  //       .addMatch([parseInt(formStates.selectedLeague, 10), parseInt(formStates.espnMatchId, 10)])
+  //       .send({ from: account })
+  //       .on('receipt', (receipt) => {
+  //         isTransactionInProgress.false();
+  //         receipt.status ? isTxSuccess.true() : isTxSuccess.false();
+  //         setTimeout(
+  //           setNewMatch({
+  //             league: leagues[Number(formStates.selectedLeague)].name,
+  //             espnMatchId: formStates.espnMatchId,
+  //           }),
+  //           3000,
+  //         );
+  //         setTimeout(closeFormModal, 4000);
+  //       })
+  //       .on('error', () => {
+  //         isTransactionInProgress.false();
+  //         isTxSuccess.false();
+  //         setTimeout(closeFormModal, 2000);
+  //       });
+  //     setTimeout(() => {
+  //       closeFormModal();
+  //     }, 30000);
+  //   } catch (error) {
+  //     console.log(error);
+  //     isTransactionInProgress.false();
+  //     closeFormModal();
+  //   }
+  // };
 
   return (
     <Fragment>
-      <form onSubmit={onFormSubmit}>
+      <form>
         <div className={classes.selectWrapper}>
           <select
             name="selectedLeague"
             id="leagueSelect"
             className={classes.leagueSelect}
             defaultValue="select_league"
-            onChange={onInputChange}>
+            // onChange={onInputChange}
+          >
             <option value="select_league" disabled>
               Select League
             </option>
-            {leagues.map((league, index) => (
-              <option value={league.id}>{league.name}</option>
-            ))}
+            <option value="league">NBA</option>
+            <option value="league">NFL</option>
+            <option value="league">F1</option>
+            <option value="league">NASCAR</option>
+            <option value="league">MMA</option>
           </select>
         </div>
 
@@ -124,20 +127,14 @@ const CreateMatchForm = (props: FORM_PROPS) => {
           type="text"
           placeholder="Espn Match Id"
           name="espnMatchId"
-          onChange={onInputChange}
+          // onChange={onInputChange}
           autoComplete="off"
           required
         />
 
-        <button className={classes.submitBtn} onClick={onFormSubmit}>
-          Add Match
-        </button>
+        <button className={classes.submitBtn}>Add Match</button>
       </form>
-      <BettingModal
-        show={isTxSuccessfulModalOpen.value}
-        loading={isTransactionInProgress.value}
-        txStatus={isTxSuccess.value}
-      />
+      <BettingModal show={false} loading={false} txStatus={false} />
     </Fragment>
   );
 };

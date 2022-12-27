@@ -15,7 +15,7 @@ import RugbyImg from 'assets/rugby.png';
 import ChessImg from 'assets/chess.png';
 import HockeyImg from 'assets/hockey.png';
 
-export const env: string = 'PROD';
+export const env: string = 'DEV';
 
 export const allowedChains: AllowedChainConfig[] =
   env == 'DEV'
@@ -37,11 +37,10 @@ export const contractAddressBSC = {
   Prediction: '0x80C45143F622Bb8D04DF392E6DcEF80Cd75677cC',
 };
 
-export const moralisParams = {
-  serverUrl: 'https://sgd97mvzwt1o.usemoralis.com:2053/server',
-  appId: 'endK62WUbrycx9oXOGELyXTN7Pzj8kFy3YxmbcVt',
-};
-
+// export const moralisParams = {
+//   serverUrl: 'https://sgd97mvzwt1o.usemoralis.com:2053/server',
+//   appId: 'endK62WUbrycx9oXOGELyXTN7Pzj8kFy3YxmbcVt',
+// };
 
 export const subGraphUrl =
   env == 'DEV'
@@ -931,7 +930,6 @@ export const league = [
 //   MLB: (id: string) => `https://sports.core.api.espn.com/v2/sports/baseball/leagues/mlb/events/${id}`,
 //   ESP: (id: string) => `https://sports.core.api.espn.com/v2/sports/soccer/leagues/esp.1/events/${id}`,
 // };
-
 
 export const leagueUrl = (name: string, id: string) => {
   let eventUrl = leagueNames.filter((value) => name == value.slug);

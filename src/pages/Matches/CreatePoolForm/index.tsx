@@ -33,29 +33,29 @@ interface FORM_PROPS {
 }
 
 const CreatePoolForm = (props: FORM_PROPS) => {
-  const isTxSuccess = useSwitch();
-  const { pools } = useAppData();
-  const { Prediction } = Contracts.instances;
-  const { account, refresh } = useMetamask();
-  const isTransactionInProgress = useSwitch();
-  const isTxSuccessfulModalOpen = useSwitch();
-  const { selectedMatches, closeFormModal } = props;
+  // const isTxSuccess = useSwitch();
+  // const { pools } = useAppData();
+  // const { Prediction } = Contracts.instances;
+  // const { account, refresh } = useMetamask();
+  // const isTransactionInProgress = useSwitch();
+  // const isTxSuccessfulModalOpen = useSwitch();
+  // const { selectedMatches, closeFormModal } = props;
 
-  const [endTime, onEndTimeChange] = useState(new Date());
-  const [startTime, onStartTimeChange] = useState(new Date());
+  // const [endTime, onEndTimeChange] = useState(new Date());
+  // const [startTime, onStartTimeChange] = useState(new Date());
 
-  const [pool, setExistingPool] = useState<any>({});
+  // const [pool, setExistingPool] = useState<any>({});
   const [isChecked, setIsChecked] = useState<boolean>(false);
 
   const [formStates, setFormStates] = useState<FORM_STATES>({
-    selectedMatches: selectedMatches,
+    selectedMatches: [],
     fee: '',
     existingPoolID: '',
   });
 
-  const upcomingActivePools = pools?.filter((pool: any) => parseInt(`${pool.startTime}000`) > Date.now());
-  const exisitingMatchesInPool = pool?.matches?.map((pool: any) => parseInt(pool?.id));
-  const newlyAddedMatches = formStates?.selectedMatches?.map((pool: any) => parseInt(pool?.id));
+  // const upcomingActivePools = pools?.filter((pool: any) => parseInt(`${pool.startTime}000`) > Date.now());
+  // const exisitingMatchesInPool = pool?.matches?.map((pool: any) => parseInt(pool?.id));
+  // const newlyAddedMatches = formStates?.selectedMatches?.map((pool: any) => parseInt(pool?.id));
 
   const onInputChange = (e: any) => {
     setFormStates({ ...formStates, [e.target.name]: e.target.value });
@@ -67,108 +67,108 @@ const CreatePoolForm = (props: FORM_PROPS) => {
     });
   };
 
-  useEffect(() => {
-    const _pool = pools?.filter((value) => value.id == parseInt(formStates.existingPoolID || '0'))?.[0];
-    setExistingPool(_pool);
-    return () => {};
-  }, [formStates.existingPoolID]);
+  // useEffect(() => {
+  //   const _pool = pools?.filter((value) => value.id == parseInt(formStates.existingPoolID || '0'))?.[0];
+  //   setExistingPool(_pool);
+  //   return () => {};
+  // }, [formStates.existingPoolID]);
 
-  const matchesToBeAdded = newlyAddedMatches?.reduce((total: any, matchId: any) => {
-    exisitingMatchesInPool?.some(() => {
-      if (exisitingMatchesInPool?.includes(matchId)) return;
-      return total.push(matchId);
-    });
-    return total;
-  }, []);
+  // const matchesToBeAdded = newlyAddedMatches?.reduce((total: any, matchId: any) => {
+  //   exisitingMatchesInPool?.some(() => {
+  //     if (exisitingMatchesInPool?.includes(matchId)) return;
+  //     return total.push(matchId);
+  //   });
+  //   return total;
+  // }, []);
 
-  const onFormSubmit = async (e: any) => {
-    e.preventDefault();
-    if (!account) return;
-    try {
-      let base = new BN(10);
-      let fee = new BN(parseFloat(formStates.fee) * Math.pow(10, 8)).mul(base.pow(new BN(10)));
-      isTransactionInProgress.true();
-      isTxSuccessfulModalOpen.true();
-      await Prediction.methods
-        .addPool([
-          formStates.selectedMatches.map((x) => parseInt(x.id)),
-          [],
-          (startTime.getTime() / 1000).toFixed(),
-          (endTime.getTime() / 1000).toFixed(),
-          fee.toString(),
-          0,
-        ])
-        .send({ from: account })
-        .on('receipt', (receipt) => {
-          isTransactionInProgress.false();
-          receipt.status ? isTxSuccess.true() : isTxSuccess.false();
-        })
-        .on('error', () => {
-          isTransactionInProgress.false();
-          isTxSuccess.false();
-        });
-      refresh.rerender();
-      setTimeout(() => {
-        closeFormModal();
-      }, 20000);
-    } catch (error) {
-      console.log(error);
-      isTransactionInProgress.false();
-      closeFormModal();
-    }
-  };
+  // const onFormSubmit = async (e: any) => {
+  //   e.preventDefault();
+  //   if (!account) return;
+  //   try {
+  //     let base = new BN(10);
+  //     let fee = new BN(parseFloat(formStates.fee) * Math.pow(10, 8)).mul(base.pow(new BN(10)));
+  //     isTransactionInProgress.true();
+  //     isTxSuccessfulModalOpen.true();
+  //     await Prediction.methods
+  //       .addPool([
+  //         formStates.selectedMatches.map((x) => parseInt(x.id)),
+  //         [],
+  //         (startTime.getTime() / 1000).toFixed(),
+  //         (endTime.getTime() / 1000).toFixed(),
+  //         fee.toString(),
+  //         0,
+  //       ])
+  //       .send({ from: account })
+  //       .on('receipt', (receipt) => {
+  //         isTransactionInProgress.false();
+  //         receipt.status ? isTxSuccess.true() : isTxSuccess.false();
+  //       })
+  //       .on('error', () => {
+  //         isTransactionInProgress.false();
+  //         isTxSuccess.false();
+  //       });
+  //     refresh.rerender();
+  //     setTimeout(() => {
+  //       closeFormModal();
+  //     }, 20000);
+  //   } catch (error) {
+  //     console.log(error);
+  //     isTransactionInProgress.false();
+  //     closeFormModal();
+  //   }
+  // };
 
-  const onUpdateExistingPoolSubmit = async (e: any, poolID: string) => {
-    e.preventDefault();
-    parseInt(poolID);
-    if (!account || !formStates.existingPoolID) return;
-    if (parseInt(`${pool?.startTime}000`) > Date.now()) {
-      try {
-        // let base = new BN(10);
-        isTransactionInProgress.true();
-        isTxSuccessfulModalOpen.true();
-        // let fee = new BN(parseFloat(pool?.fee) * Math.pow(10, 8)).mul(base.pow(new BN(10)));
-        await Prediction.methods
-          .updatePool(poolID, [
-            [...matchesToBeAdded, ...exisitingMatchesInPool],
-            [],
-            pool?.startTime,
-            pool?.endTime,
-            pool?.fee?.toString(),
-            0,
-          ])
-          .send({ from: account })
-          .on('receipt', (receipt) => {
-            isTransactionInProgress.false();
-            receipt.status ? isTxSuccess.true() : isTxSuccess.false();
-          })
-          .on('error', () => {
-            isTransactionInProgress.false();
-            isTxSuccess.false();
-          });
-        refresh.rerender();
-        setTimeout(() => {
-          closeFormModal();
-        }, 20000);
-      } catch (error) {
-        console.log(error);
-        isTransactionInProgress.false();
-        closeFormModal();
-      }
-    } else {
-      return toast.error('The pool is already active. You cannot add matches to on-going pools.');
-    }
-  };
+  // const onUpdateExistingPoolSubmit = async (e: any, poolID: string) => {
+  //   e.preventDefault();
+  //   parseInt(poolID);
+  //   if (!account || !formStates.existingPoolID) return;
+  //   if (parseInt(`${pool?.startTime}000`) > Date.now()) {
+  //     try {
+  //       // let base = new BN(10);
+  //       isTransactionInProgress.true();
+  //       isTxSuccessfulModalOpen.true();
+  //       // let fee = new BN(parseFloat(pool?.fee) * Math.pow(10, 8)).mul(base.pow(new BN(10)));
+  //       await Prediction.methods
+  //         .updatePool(poolID, [
+  //           [...matchesToBeAdded, ...exisitingMatchesInPool],
+  //           [],
+  //           pool?.startTime,
+  //           pool?.endTime,
+  //           pool?.fee?.toString(),
+  //           0,
+  //         ])
+  //         .send({ from: account })
+  //         .on('receipt', (receipt) => {
+  //           isTransactionInProgress.false();
+  //           receipt.status ? isTxSuccess.true() : isTxSuccess.false();
+  //         })
+  //         .on('error', () => {
+  //           isTransactionInProgress.false();
+  //           isTxSuccess.false();
+  //         });
+  //       refresh.rerender();
+  //       setTimeout(() => {
+  //         closeFormModal();
+  //       }, 20000);
+  //     } catch (error) {
+  //       console.log(error);
+  //       isTransactionInProgress.false();
+  //       closeFormModal();
+  //     }
+  //   } else {
+  //     return toast.error('The pool is already active. You cannot add matches to on-going pools.');
+  //   }
+  // };
 
   return (
     <Fragment>
-      <PoolFormMatchesTable selectedMatches={selectedMatches} />
+      <PoolFormMatchesTable />
       <form>
         <div className={classes.orderedList}>
           <ol type="1" className={classes.selectedMatches}>
-            {selectedMatches.map((match: any, index) => {
+            {/* {selectedMatches.map((match: any, index) => {
               <li key={index}>attempt {parseInt(match)}</li>;
-            })}
+            })} */}
           </ol>
         </div>
 
@@ -195,16 +195,21 @@ const CreatePoolForm = (props: FORM_PROPS) => {
               id="existingPoolID"
               className={classes.sportSelect}
               defaultValue="defaultID"
-              value={formStates.existingPoolID}
+              // value={formStates.existingPoolID}
               onChange={onInputChange}>
               <option value="defaultID">Select Pool ID for example #31</option>
-              {upcomingActivePools.map((pool: any, index: number) => {
-                return (
-                  <option key={index} value={pool?.id}>
-                    #{pool?.id}
-                  </option>
-                );
-              })}
+              <option key={0} value="1">
+                #1
+              </option>
+              <option key={0} value="1">
+                #2
+              </option>
+              <option key={0} value="1">
+                #3
+              </option>
+              <option key={0} value="1">
+                #4
+              </option>
             </select>
           </div>
         ) : (
@@ -213,16 +218,16 @@ const CreatePoolForm = (props: FORM_PROPS) => {
             <input
               type="datetime-local"
               className={classes.textInput}
-              onChange={(e) => onStartTimeChange(new Date(e.target.value))}
-              value={moment(startTime).format('YYYY-MM-DDTHH:mm')}
+              // onChange={(e) => onStartTimeChange(new Date(e.target.value))}
+              value="01-01-2023"
             />
 
             <label>End Time</label>
             <input
               type="datetime-local"
               className={classes.textInput}
-              onChange={(e) => onEndTimeChange(new Date(e.target.value))}
-              value={moment(endTime).format('YYYY-MM-DDTHH:mm')}
+              // onChange={(e) => onEndTimeChange(new Date(e.target.value))}
+              value="01-01-2023"
             />
 
             <label>Fee</label>
@@ -231,7 +236,7 @@ const CreatePoolForm = (props: FORM_PROPS) => {
               type="text"
               placeholder="Fee"
               name="fee"
-              onChange={onInputChange}
+              // onChange={onInputChange}
               autoComplete="off"
               required
             />
@@ -241,21 +246,16 @@ const CreatePoolForm = (props: FORM_PROPS) => {
         {isChecked ? (
           <button
             className={classes.submitBtn}
-            onClick={(e: any) => onUpdateExistingPoolSubmit(e, formStates.existingPoolID)}>
+            // onClick={(e: any) => onUpdateExistingPoolSubmit(e, formStates.existingPoolID)}
+          >
             Add to existing pool
           </button>
         ) : (
-          <button className={classes.submitBtn} onClick={onFormSubmit}>
-            Add Pool
-          </button>
+          <button className={classes.submitBtn}>Add Pool</button>
         )}
       </form>
 
-      <BettingModal
-        show={isTxSuccessfulModalOpen.value}
-        loading={isTransactionInProgress.value}
-        txStatus={isTxSuccess.value}
-      />
+      <BettingModal show={false} loading={false} txStatus={false} />
     </Fragment>
   );
 };

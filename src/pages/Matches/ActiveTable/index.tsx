@@ -45,110 +45,99 @@ interface ModalProps {
       };
     };
   }[];
-  setMatches: any;
+  // setMatches: any;
   selectedMatches: any;
   setSelectedMatches: any;
   tabState: number;
 }
 
 const ActiveTable = (props: ModalProps) => {
-  const { account } = useMetamask();
-  const { leagues } = useAppData();
-  const { _matches, setMatches, selectedMatches, setSelectedMatches, tabState } = props;
+  // const { account } = useMetamask();
+  // const { leagues } = useAppData();
+  const { _matches, selectedMatches, setSelectedMatches, tabState } = props;
 
-  useEffectAsync(async () => {
-    setFilteredMatches(_matches);
-  }, [tabState]);
+  // useEffectAsync(async () => {
+  //   setFilteredMatches(_matches);
+  // }, [tabState]);
 
-  const [isCreatePoolFormOpened, setIsCreatePoolOpened] = useState(false);
+  // const [isCreatePoolFormOpened, setIsCreatePoolOpened] = useState(false);
 
-  const [isUpcomingMatchTableActive, setIsUpcomingMatchTableActive] = useState(false);
+  // const [isUpcomingMatchTableActive, setIsUpcomingMatchTableActive] = useState(false);
 
-  const [currentSportFilter, setCurrentSportFilter] = useState('sports');
+  // const [currentSportFilter, setCurrentSportFilter] = useState('sports');
 
-  const [matches, setFilteredMatches] = useState(_matches);
+  // const [matches, setFilteredMatches] = useState(_matches);
 
-  useEffectAsync(async () => {
-    setFilteredMatches(_matches);
-  }, [tabState]);
+  // useEffectAsync(async () => {
+  //   setFilteredMatches(_matches);
+  // }, [tabState]);
 
-  const addMatches = async () => {
-    if (!account) return;
-    try {
-      const { Prediction } = Contracts.instances;
-      console.log(selectedMatches);
-      const matches = await selectedMatches.map((value: any) => {
-        console.log('okay');
-        console.log(value);
-        return [value.league.id, value.id];
-      });
-      await Prediction.methods
-        .addMatches(matches)
-        .send({ from: account })
-        .on('receipt', (receipt) => {});
-      // .on('error', () => {
-      //   isTransactionInProgress.false();
-      //   isTxSuccess.false();
-      //   setTimeout(closeFormModal, 2000);
-      // });
-      // setTimeout(() => {
-      //   closeFormModal();
-      // }, 30000);
-    } catch (error) {
-      console.log(error);
-      // isTransactionInProgress.false();
-      // closeFormModal();
-    }
-  };
+  // const addMatches = async () => {
+  //   if (!account) return;
+  //   try {
+  //     const { Prediction } = Contracts.instances;
+  //     console.log(selectedMatches);
+  //     const matches = await selectedMatches.map((value: any) => {
+  //       console.log('okay');
+  //       console.log(value);
+  //       return [value.league.id, value.id];
+  //     });
+  //     await Prediction.methods
+  //       .addMatches(matches)
+  //       .send({ from: account })
+  //       .on('receipt', (receipt) => {});
+  //     // .on('error', () => {
+  //     //   isTransactionInProgress.false();
+  //     //   isTxSuccess.false();
+  //     //   setTimeout(closeFormModal, 2000);
+  //     // });
+  //     // setTimeout(() => {
+  //     //   closeFormModal();
+  //     // }, 30000);
+  //   } catch (error) {
+  //     console.log(error);
+  //     // isTransactionInProgress.false();
+  //     // closeFormModal();
+  //   }
+  // };
 
-  const sortByFilters = useCallback(
-    (e: any) => {
-      let key = e.target.name;
-      let value = e.target.value;
-      if (key === 'sportsFilter' && value !== 'sports') {
-        setCurrentSportFilter(value);
-        setFilteredMatches(_matches.filter((match: any) => match.league.sport === value));
-      } else {
-        setFilteredMatches(_matches);
-      }
-    },
-    [currentSportFilter],
-  );
+  // const sortByFilters = useCallback(
+  //   (e: any) => {
+  //     let key = e.target.name;
+  //     let value = e.target.value;
+  //     if (key === 'sportsFilter' && value !== 'sports') {
+  //       setCurrentSportFilter(value);
+  //       setFilteredMatches(_matches.filter((match: any) => match.league.sport === value));
+  //     } else {
+  //       setFilteredMatches(_matches);
+  //     }
+  //   },
+  //   [currentSportFilter],
+  // );
 
-  const sortByDateTime = () => {
-    matches.map((match: any) => {
-      const { startTime } = match;
-      const formatted = moment.unix(startTime).format('YY-MM-DD');
-      console.log(formatted);
-    });
-  };
+  // const sortByDateTime = () => {
+  //   matches.map((match: any) => {
+  //     const { startTime } = match;
+  //     const formatted = moment.unix(startTime).format('YY-MM-DD');
+  //     console.log(formatted);
+  //   });
+  // };
 
-  console.log(matches);
+  // console.log(matches);
 
-  const onLeagueFilter = async (e: any) => {
-    e.target.value !== 'allLeagues'
-      ? setFilteredMatches(_matches.filter((value: any) => parseInt(value.league.id) == e.target.value))
-      : setFilteredMatches(_matches);
-    // props._matches = props._matches.filter(;
-  };
+  // const onLeagueFilter = async (e: any) => {
+  //   e.target.value !== 'allLeagues'
+  //     ? setFilteredMatches(_matches.filter((value: any) => parseInt(value.league.id) == e.target.value))
+  //     : setFilteredMatches(_matches);
+  //   // props._matches = props._matches.filter(;
+  // };
   return (
     <Fragment>
       <button
-        className={
-          tabState == 1 || tabState == 2
-            ? `${classes.addBtn} ${classes.displayBlock}`
-            : `${classes.addBtn} ${classes.displayNone}`
-        }
-        disabled={!(selectedMatches.length > 0)}
-        onClick={() => {
-          if (tabState == 1) {
-            return setIsCreatePoolOpened(true);
-          } else if (tabState === 2) {
-            return setIsUpcomingMatchTableActive(true);
-          }
-          // tabState == 1 ? setIsCreatePoolOpened(true) : addMatches();
-        }}>
-        {tabState == 1 ? 'Add New Pool' : 'Add Matches'}
+        className={`${classes.addBtn} ${classes.displayBlock}`}
+        // disabled={!(selectedMatches.length > 0)}
+      >
+        Add New Pool
       </button>
       <table className={classes.activeTable}>
         <thead>
@@ -161,7 +150,7 @@ const ActiveTable = (props: ModalProps) => {
                 id="sportsFilter"
                 name="sportsFilter"
                 // value={currentSportFilter}
-                onChange={sortByFilters}
+                // onChange={sortByFilters}
                 className={classes.sportsFilter}
                 // onChange={onInputChange}
               >
@@ -180,11 +169,17 @@ const ActiveTable = (props: ModalProps) => {
                 name="leagueFilter"
                 id="leagueFilter"
                 className={classes.leagueFilter}
-                onChange={onLeagueFilter}>
+                // onChange={onLeagueFilter}
+              >
                 <option value="allLeagues">League</option>
-                {leagues.map((league, index) => (
+                <option value="league">NBA</option>
+                <option value="league">NFL</option>
+                <option value="league">F1</option>
+                <option value="league">NASCAR</option>
+                <option value="league">MMA</option>
+                {/* {leagues.map((league, index) => (
                   <option value={league.id}>{league?.name.toUpperCase()}</option>
-                ))}
+                ))} */}
               </select>
             </th>
             <th>Match</th>
@@ -192,7 +187,7 @@ const ActiveTable = (props: ModalProps) => {
               <div className={classes.dateTimeHead}>
                 <span className={classes.dateTimeText}>Date & Time</span>
                 <span className={classes.sortIcon}>
-                  <BsSortUp onClick={sortByDateTime} />
+                  <BsSortUp />
                 </span>
               </div>
             </th>
@@ -202,54 +197,41 @@ const ActiveTable = (props: ModalProps) => {
           </tr>
         </thead>
         <tbody>
-          {matches.map(
-            (match: any, index: any) =>
-              match?.teams && (
-                <tr key={index}>
-                  <td>
-                    <input
-                      className={
-                        tabState == 1 || tabState == 2
-                          ? `${classes.textInput} ${classes.displayBlock}`
-                          : `${classes.textInput} ${classes.displayNone}`
-                      }
-                      type="checkbox"
-                      checked={selectedMatches.find((value: any) => value.id === match.id)}
-                      // name="selectedMatch"
-                      onChange={(e: any) => {
-                        e.target.checked
-                          ? setSelectedMatches([...selectedMatches, ...[match]] as any)
-                          : setSelectedMatches(selectedMatches.filter((value: any) => value.id !== match.id));
-                      }}
-                    />
-                  </td>
+          <tr key={0}>
+            <td>
+              <input
+                className={`${classes.textInput} ${classes.displayBlock}`}
+                type="checkbox"
+                checked={false}
+                // name="selectedMatch"
+              />
+            </td>
 
-                  <td>
-                    <img src={sportImage(match.league.sport)} alt="Match" />
-                  </td>
-                  <td className={classes.leagueName}>
-                    <p>{match?.league?.name.toUpperCase()}</p>
-                  </td>
-                  <td>
-                    <div className={classes.matchTeams}>
-                      <div className={classes.homeTeam}>
-                        <p>{match?.teams?.a?.name}</p>{' '}
-                        <img src={match?.teams?.a?.logo} alt="Home-Team-Flag" />
-                      </div>
-                      <span>VS</span>
-                      <div className={classes.awayTeam}>
-                        <img src={match?.teams?.b?.logo} alt="Home-Team-Flag" />{' '}
-                        <p>{match?.teams?.b?.name}</p>
-                      </div>
-                    </div>
-                  </td>
-                  <td className={classes.matchDateTime}>
-                    <p>{moment(parseFloat(`${match?.startTime}`)).format('DD-MM-YYYY HH:MM')}</p>
-                  </td>
-                  {/* <td className={classes.matchSeason}>
+            <td>
+              <img src={sportImage('soccer')} alt="Match" />
+            </td>
+            <td className={classes.leagueName}>
+              <p>LEAGUE_NAME</p>
+            </td>
+            <td>
+              <div className={classes.matchTeams}>
+                <div className={classes.homeTeam}>
+                  <p>TEAM A NAME</p> <img src={sportImage('soccer')} alt="Home-Team-Flag" />
+                </div>
+                <span>VS</span>
+                <div className={classes.awayTeam}>
+                  <img src={sportImage('soccer')} alt="Home-Team-Flag" /> <p>TEAM B NAME</p>
+                </div>
+              </div>
+            </td>
+            <td className={classes.matchDateTime}>
+              {/* <p>{moment(parseFloat(`${match?.startTime}`)).format('DD-MM-YYYY HH:MM')}</p> */}
+              <p>01-01-2023</p>
+            </td>
+            {/* <td className={classes.matchSeason}>
                 <p>{match}</p>
               </td> */}
-                  {/* <td>
+            {/* <td>
                 <p className={classes.matchStart}>{'09:09:00 AM'}</p>
                 <span className={`${classes.subHeaders} ${classes.muted}`}>{'ddd'}</span>
               </td>
@@ -257,27 +239,19 @@ const ActiveTable = (props: ModalProps) => {
                 <p className={classes.matchEnd}>{'09:09:00 AM'}</p>
                 <span className={`${classes.subHeaders} ${classes.muted}`}>{''}</span>
               </td> */}
-                </tr>
-              ),
-          )}
+          </tr>
         </tbody>
       </table>
       <Suspense fallback={<Spinner className={'centerSpinner'} />}>
-        <Modal isOpen={isCreatePoolFormOpened} close={() => setIsCreatePoolOpened(false)} title="Add Pool">
-          <CreatePoolForm
-            closeFormModal={() => setIsCreatePoolOpened(false)}
-            selectedMatches={selectedMatches}
-          />
+        <Modal isOpen={false} close={() => {}} title="Add Pool">
+          <CreatePoolForm closeFormModal={() => {}} selectedMatches={selectedMatches} />
         </Modal>
       </Suspense>
       {/* ------------------- */}
       <Suspense fallback={<Spinner className={'centerSpinner'} />}>
-        <Modal
-          isOpen={isUpcomingMatchTableActive}
-          close={() => setIsUpcomingMatchTableActive(false)}
-          title="Add Matches">
+        <Modal isOpen={false} close={() => {}} title="Add Matches">
           <UpcomingMatchesTableModal
-            closeUpcomingMatchesTableModal={() => setIsUpcomingMatchTableActive(false)}
+            closeUpcomingMatchesTableModal={() => {}}
             selectedMatches={selectedMatches}
           />
         </Modal>

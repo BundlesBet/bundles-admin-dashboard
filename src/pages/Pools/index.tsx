@@ -23,25 +23,26 @@ const Pools = () => {
 
   // const { Prediction } = Contracts.instances;
 
-  const { pools, isLoading } = useAppData();
+  // const { pools, isLoading } = useAppData();
+  const pools: any = [];
 
-  const activePools = pools.filter(
-    (pool) =>
-      parseFloat(`${pool.endTime}000`) > Date.now() && parseFloat(`${pool.startTime}000`) < Date.now(),
-  );
+  // const activePools = pools.filter(
+  //   (pool) =>
+  //     parseFloat(`${pool.endTime}000`) > Date.now() && parseFloat(`${pool.startTime}000`) < Date.now(),
+  // );
 
-  const upcomingPools = pools.filter((pool) => parseFloat(`${pool.startTime}000`) > Date.now());
+  // const upcomingPools = pools.filter((pool) => parseFloat(`${pool.startTime}000`) > Date.now());
 
-  const endedPools = pools.filter((pool) => parseFloat(`${pool.endTime}000`) < Date.now());
+  // const endedPools = pools.filter((pool) => parseFloat(`${pool.endTime}000`) < Date.now());
 
   const [tabState, setTabState] = useState(1);
 
   const tabsSwitcher = (index: number) => {
     switch (index) {
       case 1:
-        return <ActiveTable pools={activePools} tabState={tabState} />;
+        return <ActiveTable pools={pools} tabState={tabState} />;
       case 2:
-        return <ActiveTable pools={endedPools} tabState={tabState} />;
+        return <ActiveTable pools={pools} tabState={tabState} />;
       case 3:
         return <ActiveTable pools={pools} tabState={tabState} />;
     }
@@ -72,11 +73,6 @@ const Pools = () => {
             onClick={() => setTabState(3)}>
             ShowAll({pools.length})
           </button>
-          {isLoading.pools && (
-            <div className={classes.matchTableSpinner}>
-              <Spinner />
-            </div>
-          )}
         </div>
         {tabsSwitcher(tabState)}
       </div>

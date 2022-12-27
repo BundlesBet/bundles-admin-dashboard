@@ -59,134 +59,69 @@ const ActiveTable = (props: ModalProps) => {
           </tr>
         </thead>
         <tbody>
-          {tabState !== 3 &&
-            pools
-              .filter((pool) => parseInt(pool.totalParticipants) > 0)
-              .map((pool, index) => {
-                return (
-                  <tr key={index}>
-                    {/* <td>
-                    <p className={classes.poolName}>
-                      {/* #{pool.id} */}
-                    {/* {pool.matches?.[0]?.league?.name.toUpperCase()} */}
-                    {/* {moment(new Date(parseInt(`${pool.startTime}000`))).format('D/M')} */}
-                    {/* </p> */}
-                    {/* </td> */}
-                    {/* ----------------------------------- */}
-                    {new Set(pool.matches.map((match: any) => match?.league?.id)).size == 1 ? (
-                      <td className={classes.poolsTableRowData}>
-                        <p className={classes.poolName}>
-                          {pool.matches?.[0]?.league?.name.toUpperCase()}
-                          {moment(new Date(parseInt(`${pool.startTime}000`))).format('D/M')}
-                        </p>
-                      </td>
-                    ) : (
-                      <td className={classes.poolsTableRowData}>
-                        <p className={classes.poolName}>
-                          Mixed{moment(new Date(parseInt(`${pool.startTime}000`))).format('D/M')}
-                        </p>
-                      </td>
-                    )}
-                    {/* ----------------------------------- */}
-                    <td>
-                      <p className={classes.poolCreated}>
-                        {moment(parseFloat(`${pool.startTime}000`)).format('DD-MM-YYYY HH:mm')}
-                      </p>
-                    </td>
-                    <td>
-                      <p className={classes.poolCreated}>
-                        {moment(parseFloat(`${pool.endTime}000`)).format('DD-MM-YYYY HH:mm')}
-                      </p>
-                    </td>
-                    <td>
-                      <p className={classes.poolCreated}>{pool.totalParticipants}</p>
-                    </td>
-                    <td>
-                      <p className={classes.poolName}>{Web3.instance.utils.fromWei(pool.fee)} BUND</p>
-                    </td>
-                    <td>
-                      <button
-                        className={classes.actionBtn}
-                        onClick={() => navigate(`/pools/${pool.id}/reward`)}>
-                        Reward
-                      </button>
-                      <button
-                        className={classes.actionBtn}
-                        onClick={() => navigate(`/pools/${pool.id}/grade`)}>
-                        Grade
-                      </button>
-                      {/* {tabState === 1 && ( */}
-                      <button
-                        className={classes.actionBtn}
-                        onClick={() => navigate(`/pools/${pool.id}/update`)}>
-                        Edit
-                      </button>
-                      {/* )} */}
-                    </td>
-                  </tr>
-                );
-              })}
-          {tabState === 3 &&
-            pools.map((pool, index) => {
-              return (
-                <tr key={index}>
-                  {/* <td>
-                      <p className={classes.poolName}>
-                        {/* #{pool.id} */}
-                  {/* {pool.matches?.[0]?.league?.name.toUpperCase()} */}
-                  {/* {moment(new Date(parseInt(`${pool.startTime}000`))).format('D/M')} */}
-                  {/* </p> */}
-                  {/* </td> */}
-                  {/* ----------------------------------- */}
-                  {new Set(pool.matches.map((match: any) => match?.league?.id)).size == 1 ? (
-                    <td className={classes.poolsTableRowData}>
-                      <p className={classes.poolName}>
-                        {pool.matches?.[0]?.league?.name.toUpperCase()}
-                        {moment(new Date(parseInt(`${pool.startTime}000`))).format('D/M')}
-                      </p>
-                    </td>
-                  ) : (
-                    <td className={classes.poolsTableRowData}>
-                      <p className={classes.poolName}>
-                        Mixed{moment(new Date(parseInt(`${pool.startTime}000`))).format('D/M')}
-                      </p>
-                    </td>
-                  )}
-                  {/* ----------------------------------- */}
-                  <td>
-                    <p className={classes.poolCreated}>
-                      {moment(parseFloat(`${pool.startTime}000`)).format('DD-MM-YYYY HH:mm')}
-                    </p>
-                  </td>
-                  <td>
-                    <p className={classes.poolCreated}>
-                      {moment(parseFloat(`${pool.endTime}000`)).format('DD-MM-YYYY HH:mm')}
-                    </p>
-                  </td>
-                  <td>
-                    <p className={classes.poolCreated}>{pool.totalParticipants}</p>
-                  </td>
-                  <td>
-                    <p className={classes.poolName}>{Web3.instance.utils.fromWei(pool.fee)} BUND</p>
-                  </td>
-                  <td>
-                    <button
-                      className={classes.actionBtn}
-                      onClick={() => navigate(`/pools/${pool.id}/reward`)}>
-                      Reward
-                    </button>
-                    <button className={classes.actionBtn} onClick={() => navigate(`/pools/${pool.id}/grade`)}>
-                      Grade
-                    </button>
-                    <button
-                      className={classes.actionBtn}
-                      onClick={() => navigate(`/pools/${pool.id}/update`)}>
-                      Edit
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
+          {tabState !== 3 && (
+            <tr key={0}>
+              <td className={classes.poolsTableRowData}>
+                <p className={classes.poolName}>LEAGUE_NAME 01-01-2023</p>
+              </td>
+              {/* ----------------------------------- */}
+              <td>
+                <p className={classes.poolCreated}>01-01-2023</p>
+              </td>
+              <td>
+                <p className={classes.poolCreated}>01-01-2023</p>
+              </td>
+              <td>
+                <p className={classes.poolCreated}>0</p>
+              </td>
+              <td>
+                <p className={classes.poolName}>0 BUND</p>
+              </td>
+              <td>
+                <button className={classes.actionBtn} onClick={() => navigate(`/pools/1/reward`)}>
+                  Reward
+                </button>
+                <button className={classes.actionBtn} onClick={() => navigate(`/pools/1/grade`)}>
+                  Grade
+                </button>
+                {/* {tabState === 1 && ( */}
+                <button className={classes.actionBtn} onClick={() => navigate(`/pools/1/update`)}>
+                  Edit
+                </button>
+                {/* )} */}
+              </td>
+            </tr>
+          )}
+          {tabState === 3 && (
+            <tr key={0}>
+              <td className={classes.poolsTableRowData}>
+                <p className={classes.poolName}>LEAGUE_NAME 01-01-2023</p>
+              </td>
+              <td>
+                <p className={classes.poolCreated}>01-01-2023</p>
+              </td>
+              <td>
+                <p className={classes.poolCreated}>01-01-2023</p>
+              </td>
+              <td>
+                <p className={classes.poolCreated}>0</p>
+              </td>
+              <td>
+                <p className={classes.poolName}>0 BUND</p>
+              </td>
+              <td>
+                <button className={classes.actionBtn} onClick={() => navigate(`/pools/1/reward`)}>
+                  Reward
+                </button>
+                <button className={classes.actionBtn} onClick={() => navigate(`/pools/1/grade`)}>
+                  Grade
+                </button>
+                <button className={classes.actionBtn} onClick={() => navigate(`/pools/1/update`)}>
+                  Edit
+                </button>
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </Fragment>
