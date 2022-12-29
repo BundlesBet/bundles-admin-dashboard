@@ -17,7 +17,7 @@ const League = () => {
   // const { leagues, isLoading } = useAppData();
 
   // // Modal Control System.
-  // const [isCreateLeagueFormOpened, setIsCreateLeagueOpened] = useState(false);
+  const [isCreateLeagueFormOpened, setIsCreateLeagueOpened] = useState(true);
 
   return (
     <Fragment>
@@ -59,7 +59,7 @@ const League = () => {
 
       {/* Modal Section */}
       <Modal isOpen={false} close={() => {}} title="Create League">
-        <CreateLeagueForm closeFormModal={() => {}} />
+        <CreateLeagueForm closeFormModal={() => isCreateLeagueFormOpened} />
       </Modal>
       <Modal isOpen={false} border="none">
         {/* LeagueModifyResult Should has Status Props with The Functionality */}

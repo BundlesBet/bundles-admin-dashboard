@@ -24,7 +24,7 @@ Moralis.Cloud.afterSave('updatedLeagues', async function (request) {
 });
 
 Moralis.Cloud.define('pools', async (request) => {
-    // Database query
+  // Database query
   const pools = new Moralis.Query('Pools');
 
   const pipeline = [
@@ -176,7 +176,6 @@ Moralis.Cloud.define('pools', async (request) => {
   ];
 
   const results = await pools.aggregate(pipeline).then(function (results) {
-
     // Removing duplicates
     results = results.filter(function (value, index, self) {
       return index === self.findIndex((t) => t.id === value.id);
@@ -207,7 +206,7 @@ Moralis.Cloud.define('pools', async (request) => {
             return parseInt(value);
           }) ?? [];
 
-          // removing duplicates
+      // removing duplicates
       result.predictions = result?.predictions?.filter(function (value, index, self) {
         return index === self.findIndex((t) => t.id === value.id);
       });
@@ -215,7 +214,7 @@ Moralis.Cloud.define('pools', async (request) => {
         return index === self.findIndex((t) => t.id === value.id);
       });
 
-      // latest updated prediciton 
+      // latest updated prediciton
       result.predictions = result.predictions
         .concat(result.updatedPredictions ?? [])
         .sort((a, b) => b.block_number - a.block_number);
