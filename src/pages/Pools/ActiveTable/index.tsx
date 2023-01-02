@@ -43,7 +43,7 @@ interface ModalProps {
 
 const ActiveTable = (props: ModalProps) => {
   const { pools, tabState } = props;
-
+  console.log(pools);
   let navigate = useNavigate();
   return (
     <Fragment>
@@ -51,77 +51,59 @@ const ActiveTable = (props: ModalProps) => {
         <thead>
           <tr>
             <th>Pool Id</th>
+            <th>Pool League</th>
+            <th>Pool Name</th>
             <th>Pool Start Time</th>
             <th>Pool End Time</th>
-            <th>Total Participants</th>
             <th>Pool Fee</th>
+            <th>Reward</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          {tabState !== 3 && (
-            <tr key={0}>
-              <td className={classes.poolsTableRowData}>
-                <p className={classes.poolName}>LEAGUE_NAME 01-01-2023</p>
-              </td>
-              {/* ----------------------------------- */}
-              <td>
-                <p className={classes.poolCreated}>01-01-2023</p>
-              </td>
-              <td>
-                <p className={classes.poolCreated}>01-01-2023</p>
-              </td>
-              <td>
-                <p className={classes.poolCreated}>0</p>
-              </td>
-              <td>
-                <p className={classes.poolName}>0 BUND</p>
-              </td>
-              <td>
-                <button className={classes.actionBtn} onClick={() => navigate(`/pools/1/reward`)}>
-                  Reward
-                </button>
-                <button className={classes.actionBtn} onClick={() => navigate(`/pools/1/grade`)}>
-                  Grade
-                </button>
-                {/* {tabState === 1 && ( */}
-                <button className={classes.actionBtn} onClick={() => navigate(`/pools/1/update`)}>
-                  Edit
-                </button>
-                {/* )} */}
-              </td>
-            </tr>
-          )}
-          {tabState === 3 && (
-            <tr key={0}>
-              <td className={classes.poolsTableRowData}>
-                <p className={classes.poolName}>LEAGUE_NAME 01-01-2023</p>
-              </td>
-              <td>
-                <p className={classes.poolCreated}>01-01-2023</p>
-              </td>
-              <td>
-                <p className={classes.poolCreated}>01-01-2023</p>
-              </td>
-              <td>
-                <p className={classes.poolCreated}>0</p>
-              </td>
-              <td>
-                <p className={classes.poolName}>0 BUND</p>
-              </td>
-              <td>
-                <button className={classes.actionBtn} onClick={() => navigate(`/pools/1/reward`)}>
-                  Reward
-                </button>
-                <button className={classes.actionBtn} onClick={() => navigate(`/pools/1/grade`)}>
-                  Grade
-                </button>
-                <button className={classes.actionBtn} onClick={() => navigate(`/pools/1/update`)}>
-                  Edit
-                </button>
-              </td>
-            </tr>
-          )}
+          {pools.length &&
+            pools.map((pool: any, index: number) => {
+              const { id, fee, reward, poolName, leagueName, startTime, endTime } = pool;
+              return (
+                <tr key={index}>
+                  <td className={classes.poolsTableRowData}>
+                    <p className={classes.poolName}>{id}</p>
+                  </td>
+                  {/* ----------------------------------- */}
+                  <td>
+                    <p className={classes.poolCreated}>{leagueName}</p>
+                  </td>
+                  <td>
+                    <p className={classes.poolCreated}>{poolName}</p>
+                  </td>
+                  <td>
+                    <p className={classes.poolCreated}>{moment(startTime).format('MM-DD-YYYY')}</p>
+                  </td>
+                  <td>
+                    <p className={classes.poolName}>{moment(endTime).format('MM-DD-YYYY')}</p>
+                  </td>
+                  <td>
+                    <p className={classes.poolName}>{fee}</p>
+                  </td>
+                  <td>
+                    <p className={classes.poolName}>{reward}</p>
+                  </td>
+                  <td>
+                    <button className={classes.actionBtn} onClick={() => navigate(`/pools/1/reward`)}>
+                      Reward
+                    </button>
+                    <button className={classes.actionBtn} onClick={() => navigate(`/pools/1/grade`)}>
+                      Grade
+                    </button>
+                    {/* {tabState === 1 && ( */}
+                    <button className={classes.actionBtn} onClick={() => navigate(`/pools/1/update`)}>
+                      Edit
+                    </button>
+                    {/* )} */}
+                  </td>
+                </tr>
+              );
+            })}
         </tbody>
       </table>
     </Fragment>

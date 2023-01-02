@@ -8,7 +8,6 @@ import useSwitch from 'hooks/useSwitch';
 import Contracts from 'helpers/contracts';
 import { useAppData } from 'contexts/AppData';
 import { useMetamask } from 'contexts/Metamask';
-import { fetchUserData } from 'helpers/fetchData';
 import useEffectAsync from 'hooks/useEffectAsync';
 import useForceUpdate from '../../hooks/useForceUpdate';
 import usePersistentToast from '../../hooks/usePersistentToast';

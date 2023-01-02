@@ -1,6 +1,6 @@
 // Libraries.
-import { Fragment, useState } from 'react';
-
+import { Fragment, useState, useEffect, useCallback } from 'react';
+import axios from 'axios';
 // Styles.
 import classes from './Pools.module.scss';
 
@@ -24,8 +24,8 @@ const Pools = () => {
   // const { Prediction } = Contracts.instances;
 
   // const { pools, isLoading } = useAppData();
-  const pools: any = [];
-
+  const [pools, setPools] = useState<any>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   // const activePools = pools.filter(
   //   (pool) =>
   //     parseFloat(`${pool.endTime}000`) > Date.now() && parseFloat(`${pool.startTime}000`) < Date.now(),
@@ -34,6 +34,24 @@ const Pools = () => {
   // const upcomingPools = pools.filter((pool) => parseFloat(`${pool.startTime}000`) > Date.now());
 
   // const endedPools = pools.filter((pool) => parseFloat(`${pool.endTime}000`) < Date.now());
+  const fetchPools = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      //prettier-ignore
+      const {data:{poolsData}} = await axios(`${process.env.REACT_APP_BACKEND_URL}/admin/fetchPools`);
+      setPools(poolsData);
+      setIsLoading(false);
+    } catch (error) {
+      console.log(error);
+      setIsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (pools.length > 0) return;
+    fetchPools();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchPools]);
 
   const [tabState, setTabState] = useState(1);
 
