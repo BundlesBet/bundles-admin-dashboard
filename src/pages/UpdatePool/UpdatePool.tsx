@@ -24,7 +24,7 @@ const UpdatePool = () => {
   // const { matches, results } = pool;
   // const [deleteSelected, setDeleteSelected] = useState<Array<number>>([]);
   // const [keepSelectedMatches, setKeepSelectedMatches] = useState<Array<number>>([]);
-  const checkboxRef = useRef() as React.MutableRefObject<HTMLInputElement>;
+  // const checkboxRef = useRef() as React.MutableRefObject<HTMLInputElement>;
 
   // useEffect(() => {
   //   const updatedMatches = matches.reduce((total: any, match: any) => {

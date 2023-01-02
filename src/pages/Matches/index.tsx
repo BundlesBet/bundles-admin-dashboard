@@ -16,7 +16,6 @@ import Spinner from 'components/Common/Spinner';
 
 import espn from 'api/espn';
 import { leagueUrl } from 'config';
-import { fetchMatchById } from 'helpers/fetchData';
 const CreateMatchForm = React.lazy(() => import('./CreateMatchForm'));
 
 const Matches = () => {

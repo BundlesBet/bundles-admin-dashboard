@@ -1,3 +1,4 @@
+import axios from 'axios';
 // Libraries.
 import { Fragment, useState, useEffect } from 'react';
 import BN from 'bn.js';
@@ -22,147 +23,74 @@ import { matches } from 'graphql/queries';
 import PoolFormMatchesTable from '../PoolFormMatchesTable';
 
 interface FORM_STATES {
-  selectedMatches: any[];
+  poolName: string;
   fee: string;
-  existingPoolID: string;
+  reward: string;
 }
 
 interface FORM_PROPS {
+  sport?: string;
+  league?: string;
   selectedMatches: any[];
   closeFormModal: () => void;
 }
 
 const CreatePoolForm = (props: FORM_PROPS) => {
-  // const isTxSuccess = useSwitch();
+  const isTxSuccess = useSwitch();
   // const { pools } = useAppData();
   // const { Prediction } = Contracts.instances;
-  // const { account, refresh } = useMetamask();
-  // const isTransactionInProgress = useSwitch();
-  // const isTxSuccessfulModalOpen = useSwitch();
-  // const { selectedMatches, closeFormModal } = props;
-
-  // const [endTime, onEndTimeChange] = useState(new Date());
-  // const [startTime, onStartTimeChange] = useState(new Date());
-
-  // const [pool, setExistingPool] = useState<any>({});
-  const [isChecked, setIsChecked] = useState<boolean>(false);
+  const { account, refresh } = useMetamask();
+  const isTransactionInProgress = useSwitch();
+  const isTxSuccessfulModalOpen = useSwitch();
+  const { sport, league, selectedMatches, closeFormModal } = props;
+  const [endTime, onEndTimeChange] = useState<any>(new Date());
+  const [startTime, onStartTimeChange] = useState<any>(new Date());
 
   const [formStates, setFormStates] = useState<FORM_STATES>({
-    selectedMatches: [],
+    poolName: '',
     fee: '',
-    existingPoolID: '',
+    reward: '',
   });
-
-  // const upcomingActivePools = pools?.filter((pool: any) => parseInt(`${pool.startTime}000`) > Date.now());
-  // const exisitingMatchesInPool = pool?.matches?.map((pool: any) => parseInt(pool?.id));
-  // const newlyAddedMatches = formStates?.selectedMatches?.map((pool: any) => parseInt(pool?.id));
 
   const onInputChange = (e: any) => {
     setFormStates({ ...formStates, [e.target.name]: e.target.value });
   };
 
-  const handleChange = () => {
-    setIsChecked((currentValue: boolean) => {
-      return !currentValue;
-    });
+  const onFormSubmit = async (e: any) => {
+    e.preventDefault();
+    if (!account) return;
+    try {
+      let base = new BN(10);
+      let fee = new BN(parseFloat(formStates.fee) * Math.pow(10, 8)).mul(base.pow(new BN(10)));
+      isTransactionInProgress.true();
+      isTxSuccessfulModalOpen.true();
+      const response = await axios.post(`${process.env.REACT_APP_BACKEND_URL}/admin/createPool`, {
+        sport: sport,
+        poolName: formStates.poolName,
+        leagueName: league,
+        startTime: startTime,
+        endTime: endTime,
+        fee: formStates.fee,
+        reward: formStates.reward,
+        totalMatches: selectedMatches.length,
+        matches: selectedMatches,
+      });
+      isTransactionInProgress.false();
+      isTxSuccess.true();
+      setTimeout(() => {
+        closeFormModal();
+      }, 2000);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+      isTransactionInProgress.false();
+      closeFormModal();
+    }
   };
-
-  // useEffect(() => {
-  //   const _pool = pools?.filter((value) => value.id == parseInt(formStates.existingPoolID || '0'))?.[0];
-  //   setExistingPool(_pool);
-  //   return () => {};
-  // }, [formStates.existingPoolID]);
-
-  // const matchesToBeAdded = newlyAddedMatches?.reduce((total: any, matchId: any) => {
-  //   exisitingMatchesInPool?.some(() => {
-  //     if (exisitingMatchesInPool?.includes(matchId)) return;
-  //     return total.push(matchId);
-  //   });
-  //   return total;
-  // }, []);
-
-  // const onFormSubmit = async (e: any) => {
-  //   e.preventDefault();
-  //   if (!account) return;
-  //   try {
-  //     let base = new BN(10);
-  //     let fee = new BN(parseFloat(formStates.fee) * Math.pow(10, 8)).mul(base.pow(new BN(10)));
-  //     isTransactionInProgress.true();
-  //     isTxSuccessfulModalOpen.true();
-  //     await Prediction.methods
-  //       .addPool([
-  //         formStates.selectedMatches.map((x) => parseInt(x.id)),
-  //         [],
-  //         (startTime.getTime() / 1000).toFixed(),
-  //         (endTime.getTime() / 1000).toFixed(),
-  //         fee.toString(),
-  //         0,
-  //       ])
-  //       .send({ from: account })
-  //       .on('receipt', (receipt) => {
-  //         isTransactionInProgress.false();
-  //         receipt.status ? isTxSuccess.true() : isTxSuccess.false();
-  //       })
-  //       .on('error', () => {
-  //         isTransactionInProgress.false();
-  //         isTxSuccess.false();
-  //       });
-  //     refresh.rerender();
-  //     setTimeout(() => {
-  //       closeFormModal();
-  //     }, 20000);
-  //   } catch (error) {
-  //     console.log(error);
-  //     isTransactionInProgress.false();
-  //     closeFormModal();
-  //   }
-  // };
-
-  // const onUpdateExistingPoolSubmit = async (e: any, poolID: string) => {
-  //   e.preventDefault();
-  //   parseInt(poolID);
-  //   if (!account || !formStates.existingPoolID) return;
-  //   if (parseInt(`${pool?.startTime}000`) > Date.now()) {
-  //     try {
-  //       // let base = new BN(10);
-  //       isTransactionInProgress.true();
-  //       isTxSuccessfulModalOpen.true();
-  //       // let fee = new BN(parseFloat(pool?.fee) * Math.pow(10, 8)).mul(base.pow(new BN(10)));
-  //       await Prediction.methods
-  //         .updatePool(poolID, [
-  //           [...matchesToBeAdded, ...exisitingMatchesInPool],
-  //           [],
-  //           pool?.startTime,
-  //           pool?.endTime,
-  //           pool?.fee?.toString(),
-  //           0,
-  //         ])
-  //         .send({ from: account })
-  //         .on('receipt', (receipt) => {
-  //           isTransactionInProgress.false();
-  //           receipt.status ? isTxSuccess.true() : isTxSuccess.false();
-  //         })
-  //         .on('error', () => {
-  //           isTransactionInProgress.false();
-  //           isTxSuccess.false();
-  //         });
-  //       refresh.rerender();
-  //       setTimeout(() => {
-  //         closeFormModal();
-  //       }, 20000);
-  //     } catch (error) {
-  //       console.log(error);
-  //       isTransactionInProgress.false();
-  //       closeFormModal();
-  //     }
-  //   } else {
-  //     return toast.error('The pool is already active. You cannot add matches to on-going pools.');
-  //   }
-  // };
 
   return (
     <Fragment>
-      <PoolFormMatchesTable />
+      <PoolFormMatchesTable selectedMatches={selectedMatches} />
       <form>
         <div className={classes.orderedList}>
           <ol type="1" className={classes.selectedMatches}>
@@ -172,90 +100,65 @@ const CreatePoolForm = (props: FORM_PROPS) => {
           </ol>
         </div>
 
-        <div className={classes.addToPoolDiv}>
-          <label className={classes.addToPoolLabel}>Add to existing pool</label>
-          <label htmlFor="addMatch" className={classes.toggle}>
-            <input
-              id="addMatch"
-              type="checkbox"
-              name="addMatch"
-              checked={isChecked}
-              onChange={handleChange}
-              className={classes.toggleInput}
-            />
-            <div className={classes.toggleFill}></div>
-          </label>
-        </div>
+        <label>Pool Name</label>
+        <input
+          className={classes.textInput}
+          type="text"
+          placeholder="Enter Pool Name"
+          name="poolName"
+          onChange={onInputChange}
+          autoComplete="off"
+          required
+        />
 
-        {isChecked ? (
-          <div className={classes.poolIdDropdown}>
-            <label htmlFor="existingPoolID">Enter Pool ID</label>
-            <select
-              name="existingPoolID"
-              id="existingPoolID"
-              className={classes.sportSelect}
-              defaultValue="defaultID"
-              // value={formStates.existingPoolID}
-              onChange={onInputChange}>
-              <option value="defaultID">Select Pool ID for example #31</option>
-              <option key={0} value="1">
-                #1
-              </option>
-              <option key={0} value="1">
-                #2
-              </option>
-              <option key={0} value="1">
-                #3
-              </option>
-              <option key={0} value="1">
-                #4
-              </option>
-            </select>
-          </div>
-        ) : (
-          <>
-            <label>Start Time</label>
-            <input
-              type="datetime-local"
-              className={classes.textInput}
-              // onChange={(e) => onStartTimeChange(new Date(e.target.value))}
-              value="01-01-2023"
-            />
+        <label>Start Time</label>
+        <input
+          type="date"
+          className={classes.textInput}
+          value={moment(startTime).format('YYYY-MM-DD')}
+          onChange={(e) => onStartTimeChange(new Date(e.target.value))}
+        />
 
-            <label>End Time</label>
-            <input
-              type="datetime-local"
-              className={classes.textInput}
-              // onChange={(e) => onEndTimeChange(new Date(e.target.value))}
-              value="01-01-2023"
-            />
+        <label>End Time</label>
+        <input
+          type="date"
+          className={classes.textInput}
+          value={moment(endTime).format('YYYY-MM-DD')}
+          onChange={(e) => onEndTimeChange(new Date(e.target.value))}
+        />
 
-            <label>Fee</label>
-            <input
-              className={classes.textInput}
-              type="text"
-              placeholder="Fee"
-              name="fee"
-              // onChange={onInputChange}
-              autoComplete="off"
-              required
-            />
-          </>
-        )}
+        <label>Fee</label>
+        <input
+          className={classes.textInput}
+          type="text"
+          placeholder="Fee"
+          name="fee"
+          onChange={onInputChange}
+          autoComplete="off"
+          required
+        />
 
-        {isChecked ? (
-          <button
-            className={classes.submitBtn}
-            // onClick={(e: any) => onUpdateExistingPoolSubmit(e, formStates.existingPoolID)}
-          >
-            Add to existing pool
-          </button>
-        ) : (
-          <button className={classes.submitBtn}>Add Pool</button>
-        )}
+        <label>Reward</label>
+        <input
+          className={classes.textInput}
+          type="text"
+          placeholder="Enter Reward"
+          name="reward"
+          onChange={onInputChange}
+          autoComplete="off"
+          required
+        />
+
+        <button className={classes.submitBtn} onClick={onFormSubmit}>
+          Create Pool
+        </button>
       </form>
 
-      <BettingModal show={false} loading={false} txStatus={false} />
+      <BettingModal
+        show={isTxSuccessfulModalOpen.value}
+        loading={isTransactionInProgress.value}
+        txStatus={isTxSuccess.value}
+      />
     </Fragment>
   );
 };
