@@ -1,0 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  p {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 0;
+  }
+
+  img {
+    cursor: pointer;
+    width: 20px;
+  }
+}
+
+.content {
+  margin-top: 30px;
+}

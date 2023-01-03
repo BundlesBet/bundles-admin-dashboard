@@ -1,0 +1,70 @@
+.selectWrapper {
+  position: relative;
+  border: 1px solid #1b1b1b;
+  border-radius: 2px;
+  margin-bottom: 10px;
+
+  &::after {
+    content: '▼';
+    position: absolute;
+    font-size: 1rem;
+    right: 20px;
+    top: 10px;
+    pointer-events: none;
+  }
+
+  .sportSelect,
+  .statusSelect,
+  .roundSelect {
+    width: 100%;
+    padding: 15px 25px;
+    background-color: #050505;
+    font-family: Poppins;
+    font-style: normal;
+    font-weight: 300;
+    font-size: 11px;
+    line-height: 11px;
+    color: #ffffff;
+    -webkit-appearance: none;
+    appearance: none;
+    border: none;
+    cursor: pointer;
+  }
+}
+
+.textInput {
+  width: 100%;
+  padding: 15px 25px;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 11px;
+  line-height: 11px;
+  color: #ffffff;
+  background-color: #050505;
+  margin: 8px auto;
+  border: 1px solid #1b1b1b;
+  border-radius: 2px;
+
+  &::placeholder {
+    color: #fff;
+  }
+
+  &:focus {
+    background-color: #050505;
+  }
+}
+
+.submitBtn {
+  padding: 10px 40px;
+  margin: 20px auto;
+  display: block;
+  width: 100%;
+  background-color: #00ffc2;
+  font-family: Poppins;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 12px;
+  line-height: 13px;
+  text-align: center;
+}
